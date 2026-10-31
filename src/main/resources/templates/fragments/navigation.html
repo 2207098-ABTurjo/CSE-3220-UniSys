@@ -1,0 +1,13 @@
+<header class="topbar" th:fragment="navigation">
+    <a class="brand" th:href="@{/dashboard}">
+        <span class="brand-mark">U</span>
+        <span>University <strong>Management</strong></span>
+    </a>
+    <nav class="topbar-actions">
+        <a class="nav-link" th:href="@{/dashboard}">Dashboard</a>
+        <span class="user-chip"><span class="user-dot"></span><span th:text="${username}">User</span><span class="role-badge" th:text="${roleCode}">ROLE</span></span>
+        <form th:action="@{/logout}" method="post">
+            <button class="button button-quiet button-small" type="submit">Sign out</button>
+        </form>
+    </nav>
+</header>

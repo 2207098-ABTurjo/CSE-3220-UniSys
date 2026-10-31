@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title th:text="${formTitle} + ' | University Management'">Account | University Management</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div th:replace="~{fragments/navigation :: navigation}"></div>
+<main class="page-shell form-page">
+    <div class="breadcrumbs"><a th:href="@{/dashboard}">Dashboard</a><span>/</span><a th:href="@{/users/{resource}(resource=${resource})}" th:text="${resourceLabel}">Accounts</a><span>/</span><span th:text="${editing ? 'Edit' : 'New'}">New</span></div>
+    <section class="form-layout">
+        <div class="form-aside">
+            <span class="eyebrow">ACCOUNT DIRECTORY</span>
+            <h1 th:text="${formTitle}">Add account</h1>
+            <p class="muted">Enter the account details below. Passwords are securely hashed before they are stored.</p>
+            <div class="form-note"><span class="info-icon">i</span><span th:if="${editing}">Enter a new password to update this account's password.</span><span th:unless="${editing}">Use a password with at least 6 characters.</span></div>
+        </div>
+        <section class="form-card">
+            <div class="alert alert-error" th:if="${formError}" th:text="${formError}"></div>
+            <div class="alert alert-error" th:if="${validationErrors}">
+                <p th:each="error : ${validationErrors}" th:text="${error}">Invalid input</p>
+            </div>
+            <form th:action="${formAction}" th:object="${user}" method="post" class="stack-form">
+                <div class="form-grid">
+                    <div class="field">
+                        <label for="fullName">Full name <span class="required">*</span></label>
+                        <input id="fullName" th:field="*{fullName}" type="text" maxlength="100" placeholder="e.g. Alex Rahman" required>
+                    </div>
+                    <div class="field">
+                        <label for="username">Username <span class="required">*</span></label>
+                        <input id="username" th:field="*{username}" type="text" maxlength="50" autocomplete="off" placeholder="Choose a username" required>
+                    </div>
+                    <div class="field">
+                        <label for="email">Email address <span class="required">*</span></label>
+                        <input id="email" th:field="*{email}" type="email" maxlength="120" placeholder="name@university.edu" required>
+                    </div>
+                    <div class="field">
+                        <label for="password" th:text="${editing ? 'New password' : 'Password'}">Password</label>
+                        <input id="password" th:field="*{password}" type="password" minlength="6" maxlength="100" autocomplete="new-password" placeholder="At least 6 characters" required>
+                    </div>
+                    <div class="field" th:if="${resource != 'students'}">
+                        <label for="department">Department</label>
+                        <input id="department" th:field="*{department}" type="text" placeholder="e.g. Computer Science">
+                    </div>
+                    <div class="field" th:if="${resource == 'students'}">
+                        <label for="studentId">Student ID</label>
+                        <input id="studentId" th:field="*{studentId}" type="text" placeholder="e.g. 2026-001">
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <a class="button button-quiet" th:href="@{/users/{resource}(resource=${resource})}">Cancel</a>
+                    <button class="button button-primary" type="submit" th:text="${editing ? 'Save changes' : 'Create account'}">Create account</button>
+                </div>
+            </form>
+        </section>
+    </section>
+</main>
+<footer class="page-footer">University Management System <span>·</span> <span th:text="${resourceLabel}">Accounts</span></footer>
+</body>
+</html>

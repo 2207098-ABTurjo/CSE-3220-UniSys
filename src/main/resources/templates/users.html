@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title th:text="${resourceLabel} + ' | University Management'">Accounts | University Management</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div th:replace="~{fragments/navigation :: navigation}"></div>
+<main class="page-shell">
+    <div class="breadcrumbs"><a th:href="@{/dashboard}">Dashboard</a><span>/</span><span th:text="${resourceLabel}">Accounts</span></div>
+    <section class="list-heading">
+        <div>
+            <span class="eyebrow">ACCOUNT DIRECTORY</span>
+            <h1 th:text="${resourceLabel}">Teachers</h1>
+            <p class="muted">Browse and manage registered accounts.</p>
+        </div>
+        <a class="button button-primary" th:href="@{/users/{resource}/new(resource=${resource})}"><span aria-hidden="true">＋</span> Add account</a>
+    </section>
+    <section class="table-card">
+        <div class="table-toolbar">
+            <div><h2 th:text="${resourceLabel} + ' list'">Account list</h2><p class="muted"><span th:text="${#lists.size(users)}">0</span> accounts</p></div>
+            <a class="button button-quiet" th:href="@{/dashboard}">Back to dashboard</a>
+        </div>
+        <div class="table-scroll" th:if="${!#lists.isEmpty(users)}">
+            <table>
+                <thead>
+                <tr>
+                    <th>Name</th><th>Username</th><th>Email</th>
+                    <th th:if="${resource != 'students'}">Department</th>
+                    <th th:if="${resource == 'students'}">Student ID</th>
+                    <th class="actions-heading">Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="user : ${users}">
+                    <td><div class="person-cell"><span class="avatar" th:text="${#strings.substring(user.fullName(), 0, 1)}">A</span><span th:text="${user.fullName()}">Full name</span></div></td>
+                    <td><span class="username-cell" th:text="${user.username()}">username</span></td>
+                    <td th:text="${user.email()}">email</td>
+                    <td th:if="${resource != 'students'}" th:text="${user.department() == null or user.department().isBlank() ? '—' : user.department()}">Department</td>
+                    <td th:if="${resource == 'students'}" th:text="${user.studentId() == null or user.studentId().isBlank() ? '—' : user.studentId()}">Student ID</td>
+                    <td>
+                        <div class="row-actions">
+                            <a class="button button-quiet button-small" th:href="@{/users/{resource}/{id}/edit(resource=${resource},id=${user.id()})}">Edit</a>
+                            <form th:action="@{/users/{resource}/{id}/delete(resource=${resource},id=${user.id()})}" method="post">
+                                <button class="button button-danger button-small" type="submit">Delete</button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="empty-state" th:if="${#lists.isEmpty(users)}">
+            <span class="empty-icon">＋</span>
+            <h3>No accounts yet</h3>
+            <p>Create the first account in this section to get started.</p>
+            <a class="button button-primary" th:href="@{/users/{resource}/new(resource=${resource})}">Add first account</a>
+        </div>
+    </section>
+</main>
+<footer class="page-footer">University Management System <span>·</span> <span th:text="${resourceLabel}">Accounts</span></footer>
+</body>
+</html>
