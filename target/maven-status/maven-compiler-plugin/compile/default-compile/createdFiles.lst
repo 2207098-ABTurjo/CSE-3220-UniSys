@@ -1,0 +1,16 @@
+com\university\ums\model\AppUser.class
+com\university\ums\dto\UserResponse.class
+com\university\ums\controller\WebController$1.class
+com\university\ums\repository\UserRepository.class
+com\university\ums\config\SecurityConfig.class
+com\university\ums\controller\UserController.class
+com\university\ums\controller\WebController.class
+com\university\ums\controller\AuthController$LoginRequest.class
+com\university\ums\dto\UserRequest.class
+com\university\ums\model\Role.class
+com\university\ums\controller\WebController$Resource.class
+com\university\ums\config\DataInitializer.class
+com\university\ums\service\UserService.class
+com\university\ums\controller\WebController$ResourceCard.class
+com\university\ums\UniversityManagementApplication.class
+com\university\ums\controller\AuthController.class

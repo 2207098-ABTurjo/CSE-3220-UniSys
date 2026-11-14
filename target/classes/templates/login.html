@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Sign in | University Management</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body class="login-page">
+<main class="login-layout">
+    <section class="login-intro">
+        <a class="brand brand-light" th:href="@{/login}">
+            <span class="brand-mark">U</span>
+            <span>University <strong>Management</strong></span>
+        </a>
+        <div class="intro-copy">
+            <span class="eyebrow eyebrow-light">CAMPUS ADMINISTRATION</span>
+            <h1>Everything your university needs, in one place.</h1>
+            <p>Manage academic accounts and keep your campus operations moving.</p>
+        </div>
+        <div class="intro-footer">A simpler way to manage your university.</div>
+    </section>
+    <section class="login-panel">
+        <div class="login-card">
+            <span class="eyebrow">WELCOME BACK</span>
+            <h2>Sign in to your account</h2>
+            <p class="muted">Enter your username and password to continue.</p>
+            <div class="alert alert-error" th:if="${param.error}">The username or password is incorrect.</div>
+            <div class="alert alert-success" th:if="${param.logout}">You have been signed out.</div>
+            <form th:action="@{/login}" method="post" class="stack-form">
+                <label for="username">Username</label>
+                <input id="username" name="username" type="text" autocomplete="username" placeholder="Enter your username" required autofocus>
+                <label for="password">Password</label>
+                <input id="password" name="password" type="password" autocomplete="current-password" placeholder="Enter your password" required>
+                <button class="button button-primary button-wide" type="submit">Sign in <span aria-hidden="true">→</span></button>
+            </form>
+            <div class="login-help">Demo administrator: <strong>admin</strong> / <strong>admin123</strong></div>
+        </div>
+    </section>
+</main>
+</body>
+</html>

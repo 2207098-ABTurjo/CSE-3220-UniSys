@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Dashboard | University Management</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div th:replace="~{fragments/navigation :: navigation}"></div>
+<main class="page-shell">
+    <section class="welcome-banner">
+        <div>
+            <span class="eyebrow eyebrow-light">YOUR CAMPUS, AT A GLANCE</span>
+            <h1>Welcome back, <span th:text="${username}">User</span></h1>
+            <p>Choose an area below to manage university accounts.</p>
+        </div>
+        <div class="welcome-symbol" aria-hidden="true">U</div>
+    </section>
+    <section class="section-heading">
+        <div>
+            <span class="eyebrow">WORKSPACE</span>
+            <h2>Account management</h2>
+            <p class="muted">You can manage the following account types.</p>
+        </div>
+    </section>
+    <section class="resource-grid">
+        <a class="resource-card" th:each="card, state : ${cards}"
+           th:href="@{/users/{path}(path=${card.path})}">
+            <div class="resource-card-top">
+                <span class="resource-icon" th:classappend="${card.path == 'admins' ? ' icon-admin' : (card.path == 'teachers' ? ' icon-teacher' : ' icon-student')}"
+                      th:text="${card.path == 'admins' ? 'A' : (card.path == 'teachers' ? 'T' : 'S')}">A</span>
+                <span class="card-arrow" aria-hidden="true">↗</span>
+            </div>
+            <h3 th:text="${card.label}">Teachers</h3>
+            <p>View and manage university accounts.</p>
+            <div class="card-footer">
+                <span><strong th:text="${card.count}">0</strong> accounts</span>
+                <span class="text-link">Open list <span aria-hidden="true">→</span></span>
+            </div>
+        </a>
+    </section>
+    <section class="info-strip">
+        <span class="info-icon">i</span>
+        <p>Your <strong th:text="${roleCode}">ROLE</strong> account can manage only the account types shown above.</p>
+    </section>
+</main>
+<footer class="page-footer">University Management System <span>·</span> Account administration</footer>
+</body>
+</html>
